@@ -20,7 +20,7 @@ const FuneralLandingPage = () => {
         <header className="container mx-auto px-4 py-16 text-center">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">Compassionate Farewells</h1>
           <p className="text-xl text-gray-600 mb-8">Honoring Lives with Dignity and Respect</p>
-          <Button className="bg-gray-700 hover:bg-gray-800 text-white">Contact Us</Button>
+          <Button className="bg-gray-700 hover:bg-gray-800 text-white">Contact Us Please</Button>
         </header>
 
         {/* Services Section */}
