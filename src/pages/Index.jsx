@@ -9,7 +9,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import { Heart, Flower, Candle, Phone, Mail, MapPin } from 'lucide-react';
+import { Heart, Flower, HeartHandshake, Phone, Mail, MapPin } from 'lucide-react';
 
 const FuneralLandingPage = () => {
   return (
@@ -38,7 +38,7 @@ const FuneralLandingPage = () => {
               description="Personalized ceremonies to celebrate and honor your loved ones."
             />
             <ServiceCard
-              icon={<Candle className="w-12 h-12 text-gray-600" />}
+              icon={<HeartHandshake className="w-12 h-12 text-gray-600" />}
               title="Grief Support"
               description="Ongoing counseling and resources to help you through the healing process."
             />
@@ -142,6 +142,94 @@ const BouquetDesigner = () => {
   );
 };
 
-// ... (Navbar, Footer, and ServiceCard components remain the same)
+const Navbar = () => {
+  return (
+    <nav className="bg-white shadow-md">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center py-4">
+          <div className="text-2xl font-bold text-gray-800">Compassionate Farewells</div>
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuLink className="text-gray-700 hover:text-gray-900" href="#">
+                  Home
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="text-gray-700 hover:text-gray-900">Services</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-4 w-[400px]">
+                    <li><NavigationMenuLink href="#">Funeral Services</NavigationMenuLink></li>
+                    <li><NavigationMenuLink href="#">Memorial Services</NavigationMenuLink></li>
+                    <li><NavigationMenuLink href="#">Grief Support</NavigationMenuLink></li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink className="text-gray-700 hover:text-gray-900" href="#">
+                  About Us
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink className="text-gray-700 hover:text-gray-900" href="#">
+                  Contact
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+const Footer = () => {
+  return (
+    <footer className="bg-gray-800 text-white py-8">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 className="text-xl font-semibold mb-4">Compassionate Farewells</h3>
+            <p>Providing caring and dignified funeral services since 1970.</p>
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
+            <ul>
+              <li><a href="#" className="hover:underline">Home</a></li>
+              <li><a href="#" className="hover:underline">Services</a></li>
+              <li><a href="#" className="hover:underline">About Us</a></li>
+              <li><a href="#" className="hover:underline">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
+            <ul>
+              <li className="flex items-center mb-2"><Phone className="mr-2" size={18} /> (555) 123-4567</li>
+              <li className="flex items-center mb-2"><Mail className="mr-2" size={18} /> info@compassionatefarewells.com</li>
+              <li className="flex items-center"><MapPin className="mr-2" size={18} /> 123 Main St, Anytown, USA</li>
+            </ul>
+          </div>
+        </div>
+        <div className="mt-8 text-center">
+          <p>&copy; 2023 Compassionate Farewells. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+const ServiceCard = ({ icon, title, description }) => {
+  return (
+    <Card className="text-center">
+      <CardHeader>
+        <div className="mx-auto">{icon}</div>
+        <CardTitle className="text-xl font-semibold text-gray-800">{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-gray-600">{description}</p>
+      </CardContent>
+    </Card>
+  );
+};
 
 export default FuneralLandingPage;
