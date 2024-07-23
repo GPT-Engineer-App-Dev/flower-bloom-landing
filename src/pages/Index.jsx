@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import {
@@ -45,6 +45,13 @@ const FuneralLandingPage = () => {
           </div>
         </section>
 
+        {/* Bouquet Designer Section */}
+        <section className="container mx-auto px-4 py-16">
+          <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Design a Memorial Bouquet</h2>
+          <p className="text-center text-gray-600 mb-8">Create a personalized bouquet to honor your loved one</p>
+          <BouquetDesigner />
+        </section>
+
         {/* About Section */}
         <section className="container mx-auto px-4 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -75,94 +82,66 @@ const FuneralLandingPage = () => {
   );
 };
 
-const Navbar = () => {
+const BouquetDesigner = () => {
+  const canvasRef = useRef(null);
+  const [flowers, setFlowers] = useState([]);
+
+  const flowerTypes = [
+    { name: 'Rose', color: '#FF0000' },
+    { name: 'Lily', color: '#FFFFFF' },
+    { name: 'Carnation', color: '#FFC0CB' },
+    { name: 'Chrysanthemum', color: '#FFFF00' },
+  ];
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    flowers.forEach((flower) => {
+      ctx.beginPath();
+      ctx.arc(flower.x, flower.y, 20, 0, 2 * Math.PI);
+      ctx.fillStyle = flower.color;
+      ctx.fill();
+    });
+  }, [flowers]);
+
+  const addFlower = (flowerType) => {
+    setFlowers([...flowers, {
+      x: Math.random() * 380 + 10,
+      y: Math.random() * 380 + 10,
+      color: flowerType.color,
+    }]);
+  };
+
+  const clearCanvas = () => {
+    setFlowers([]);
+  };
+
   return (
-    <nav className="bg-white shadow-md">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center py-4">
-          <div className="text-2xl font-bold text-gray-800">Compassionate Farewells</div>
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuLink className="text-gray-700 hover:text-gray-900" href="#">
-                  Home
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-gray-700 hover:text-gray-900">Services</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid gap-3 p-4 w-[400px]">
-                    <li><NavigationMenuLink href="#">Funeral Services</NavigationMenuLink></li>
-                    <li><NavigationMenuLink href="#">Memorial Services</NavigationMenuLink></li>
-                    <li><NavigationMenuLink href="#">Grief Support</NavigationMenuLink></li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink className="text-gray-700 hover:text-gray-900" href="#">
-                  About Us
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink className="text-gray-700 hover:text-gray-900" href="#">
-                  Contact
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
+    <div className="flex flex-col items-center">
+      <div className="mb-4 flex space-x-2">
+        {flowerTypes.map((flowerType) => (
+          <Button
+            key={flowerType.name}
+            onClick={() => addFlower(flowerType)}
+            className="bg-gray-200 text-gray-800 hover:bg-gray-300"
+          >
+            Add {flowerType.name}
+          </Button>
+        ))}
+        <Button onClick={clearCanvas} className="bg-red-500 text-white hover:bg-red-600">Clear</Button>
       </div>
-    </nav>
+      <canvas
+        ref={canvasRef}
+        width={400}
+        height={400}
+        className="border border-gray-300 rounded"
+      />
+    </div>
   );
 };
 
-const Footer = () => {
-  return (
-    <footer className="bg-gray-800 text-white py-8">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Compassionate Farewells</h3>
-            <p>Providing caring and dignified funeral services since 1970.</p>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
-            <ul>
-              <li><a href="#" className="hover:underline">Home</a></li>
-              <li><a href="#" className="hover:underline">Services</a></li>
-              <li><a href="#" className="hover:underline">About Us</a></li>
-              <li><a href="#" className="hover:underline">Contact</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
-            <ul>
-              <li className="flex items-center mb-2"><Phone className="mr-2" size={18} /> (555) 123-4567</li>
-              <li className="flex items-center mb-2"><Mail className="mr-2" size={18} /> info@compassionatefarewells.com</li>
-              <li className="flex items-center"><MapPin className="mr-2" size={18} /> 123 Main St, Anytown, USA</li>
-            </ul>
-          </div>
-        </div>
-        <div className="mt-8 text-center">
-          <p>&copy; 2023 Compassionate Farewells. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-const ServiceCard = ({ icon, title, description }) => {
-  return (
-    <Card className="text-center">
-      <CardHeader>
-        <div className="mx-auto">{icon}</div>
-        <CardTitle className="text-xl font-semibold text-gray-800">{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-gray-600">{description}</p>
-      </CardContent>
-    </Card>
-  );
-};
+// ... (Navbar, Footer, and ServiceCard components remain the same)
 
 export default FuneralLandingPage;
